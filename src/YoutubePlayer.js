@@ -1,12 +1,15 @@
 import React from 'react';
-import { Form, Container, Button, Embed } from 'semantic-ui-react'
+import { Form, Container, Button, Embed, Divider, Grid } from 'semantic-ui-react'
+import img from './assets/ayo.jpg'
+import Suggestion from './Suggestion'
 
 class YoutubePlayer extends React.Component {
   state = {
-    query: 'React',
+    query: 'Cars',
     url: `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&key=@some@key@&q=`,
     mainVideo: '',
     suggestedVideos: []
+    // GET https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=surfing&key=[YOUR_API_KEY] HTTP/1.1
   }
 
   componentDidMount () {
@@ -42,6 +45,10 @@ class YoutubePlayer extends React.Component {
     this.setState({...this.state, query: e.target.value})
   }
 
+  changeVideo =  (video) => {
+    this.setState({...this.state, mainVideo: video.id.videoId})
+  }
+
   render () {
     return (
       <div>
@@ -57,9 +64,19 @@ class YoutubePlayer extends React.Component {
 
           <Embed 
             id = {this.state.mainVideo}
-            placeholder = ''
+            placeholder = {img}
             source = 'youtube'
           />
+
+          <Divider horizontal>
+            Suggestions
+          </Divider>
+
+          <Grid doubling column={3}>
+            {
+              this.state.suggestedVideos.map(video => <Suggestion video={video} changeVideo={this.changeVideo} />)
+            }
+          </Grid>
         </Container>
       </div>
     )
