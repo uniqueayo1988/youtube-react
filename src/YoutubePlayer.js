@@ -30,7 +30,7 @@ class YoutubePlayer extends React.Component {
           })
         })
         .catch(e => {
-          console.log(e, 'data errors testing')
+          console.log(e, 'data errors testing and testing and another test...')
         })
     )
   }
